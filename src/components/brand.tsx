@@ -6,7 +6,9 @@ export function Brand() {
       <span className="brand-icon">
         <ChartNoAxesCombined size={23} />
       </span>
-      Finance<span className="font-normal">Flow</span>
+      <span>
+        Finance<span className="font-normal">Flow</span>
+      </span>
     </Link>
   );
 }

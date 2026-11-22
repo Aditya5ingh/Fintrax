@@ -143,8 +143,8 @@ export function MonthlyFinances({
   const money = (amount: number) => formatMoney(amount, currency);
   return (
     <>
-      <section className="card mb-6">
-        <div className="flex flex-wrap justify-between items-start gap-5">
+      <section className="card monthly-toolbar mb-6">
+        <div className="monthly-heading">
           <div>
             <div className="eyebrow mb-3">
               <CalendarDays size={17} />
@@ -155,7 +155,7 @@ export function MonthlyFinances({
               Income, expenses, and your monthly result in one place.
             </p>
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="monthly-actions">
             <Button disabled={busy} onClick={() => openForm("income")}>
               <Plus size={16} />
               Add income
@@ -170,7 +170,7 @@ export function MonthlyFinances({
             </Button>
           </div>
         </div>
-        <div className="grid sm:grid-cols-3 gap-4 mt-7">
+        <div className="monthly-controls">
           <div className="field mb-0">
             <label htmlFor="finance-month">Month</label>
             <select
@@ -198,7 +198,7 @@ export function MonthlyFinances({
           >
             <div className="field mb-0">
               <label htmlFor="finance-year">Year</label>
-              <div className="flex gap-2">
+              <div className="year-control">
                 <input
                   id="finance-year"
                   disabled={busy}
@@ -215,7 +215,7 @@ export function MonthlyFinances({
               </div>
             </div>
           </form>
-          <div className="field mb-0">
+          <div className="field mb-0 currency-field">
             <label htmlFor="finance-currency">Currency</label>
             <select
               id="finance-currency"
@@ -234,7 +234,7 @@ export function MonthlyFinances({
             </select>
           </div>
         </div>
-        <div className="flex flex-wrap gap-2 mt-4">
+        <div className="month-navigation">
           <Button
             variant="ghost"
             disabled={busy || month === "1900-01"}
@@ -293,7 +293,7 @@ export function MonthlyFinances({
         )}
         {shown && (
           <>
-            <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
+            <div className="monthly-stats">
               {[
                 {
                   label: "Income received",
@@ -328,10 +328,10 @@ export function MonthlyFinances({
               ))}
             </div>
             <section className="card mb-6">
-              <div className="flex flex-wrap gap-3 justify-between">
+              <div className="activity-heading">
                 <h3>{monthLabel(month)} activity</h3>
                 <div
-                  className="flex gap-2"
+                  className="record-tabs"
                   role="group"
                   aria-label="Record type"
                 >
@@ -373,7 +373,12 @@ export function MonthlyFinances({
                   </p>
                 </div>
               ) : (
-                <div className="overflow-x-auto">
+                <div
+                  className="table-scroll"
+                  tabIndex={0}
+                  role="region"
+                  aria-label="Monthly records, scroll horizontally to view all columns"
+                >
                   <table className="w-full text-left text-sm min-w-[650px]">
                     <caption className="sr-only">
                       {monthLabel(month)} {kind} records in {currency}
@@ -471,12 +476,12 @@ export function MonthlyFinances({
                   </table>
                 </div>
               )}
-              <div className="flex flex-wrap justify-between gap-3 items-center mt-5">
+              <div className="pagination">
                 <span className="muted text-sm">
                   {shown.count} entries · Page {page} of{" "}
                   {Math.max(1, Math.ceil(shown.count / 50))}
                 </span>
-                <div className="flex gap-2">
+                <div className="pagination-actions">
                   <Button
                     variant="outline"
                     disabled={busy || page <= 1}
@@ -536,7 +541,7 @@ export function MonthlyFinances({
                 Choose a month to view its details. Monthly net is based on
                 recorded activity; it is not your bank balance.
               </p>
-              <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">
+              <div className="month-grid">
                 {shown.months.map((m) => (
                   <button
                     key={m.month}
@@ -547,7 +552,7 @@ export function MonthlyFinances({
                       selectMonth(m.month);
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
-                    className={`card text-left transition-colors ${m.month === month ? "ring-2 ring-emerald-600" : "hover:border-emerald-600"}`}
+                    className={`card month-card text-left transition-colors ${m.month === month ? "ring-2 ring-emerald-600" : "hover:border-emerald-600"}`}
                   >
                     <span className="font-semibold block mb-4">
                       {monthLabel(m.month)}

@@ -444,7 +444,12 @@ export function ExpenseTracker({
                     </p>
                   </div>
                 ) : (
-                  <div className="overflow-x-auto">
+                  <div
+                    className="table-scroll"
+                    tabIndex={0}
+                    role="region"
+                    aria-label="Expenses, scroll horizontally to view all columns"
+                  >
                     <table className="w-full text-sm text-left min-w-[650px]">
                       <caption className="sr-only">
                         Expenses for the selected filters
@@ -533,12 +538,12 @@ export function ExpenseTracker({
                     </table>
                   </div>
                 )}
-                <div className="flex flex-wrap justify-between items-center gap-3 mt-5">
+                <div className="pagination">
                   <span className="muted text-sm">
                     {data.count} expenses · Page {page} of{" "}
                     {Math.max(1, Math.ceil(data.count / 50))}
                   </span>
-                  <div className="flex gap-2">
+                  <div className="pagination-actions">
                     <Button
                       variant="outline"
                       disabled={busy || page <= 1}

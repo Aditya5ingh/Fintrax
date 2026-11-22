@@ -13,7 +13,7 @@ import { ThemeToggle } from "@/components/providers";
 import { Button } from "@/components/ui/button";
 export default function Home() {
   return (
-    <div className="container">
+    <div className="site-container">
       <header className="site-header">
         <Brand />
         <nav>
